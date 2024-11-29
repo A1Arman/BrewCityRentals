@@ -1,0 +1,214 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styling */
+header {
+    background: #3b82f6;
+    color: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #2563eb;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+nav ul li a:hover {
+    background: #2563eb;
+}
+
+#logoutButton {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#logoutButton:hover {
+    background: #dc2626;
+}
+
+/* Main Content Styling */
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Section Titles */
+section h2 {
+    font-size: 1.5rem;
+    color: #3b82f6;
+    margin-bottom: 1rem;
+}
+
+/* Form Styling */
+form {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+form label {
+    font-weight: bold;
+}
+
+form input, form select, form button {
+    padding: 0.7rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+form input:focus, form select:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
+
+form button {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+form button:hover {
+    background: #2563eb;
+}
+
+/* Buttons */
+button {
+    cursor: pointer;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    background: #3b82f6;
+    color: white;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #2563eb;
+}
+
+/* Account Info */
+#account div {
+    margin-bottom: 1rem;
+}
+
+#account label {
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+#account span {
+    color: #3b82f6;
+    font-weight: 500;
+}
+
+/* Rental List Styling */
+#rentalList, #customerList, #movieList, #employeeList {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+#rentalList li, #customerList li, #movieList li, #employeeList li {
+    background: #f9f9f9;
+    margin-bottom: 0.5rem;
+    padding: 0.7rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    transition: transform 0.2s ease;
+}
+
+#rentalList li:hover, #customerList li:hover, #movieList li:hover, #employeeList li:hover {
+    transform: translateY(-2px);
+    background: #f4f4f9;
+}
+
+/* Footer */
+footer {
+    background: #2563eb;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 2rem;
+    border-top: 2px solid #3b82f6;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+
+.hidden {
+    display: none;
+}
+
+
+.disabled-link {
+    color: grey;
+    pointer-events: none;
+}
+
+.bold {
+    font-weight: bold;
+}

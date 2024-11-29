@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brew City Rentals</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Brew City Rentals</h1>
+        <nav>
+            <ul id="navLinks">
+                <!-- Links will be populated dynamically based on the user's role -->
+            </ul>
+            <!-- <ul>
+                <li><a href="#login" id="loginLink">Login</a></li>
+                <li><a href="#register" id="registerLink">Register</a></li>
+                <li><a href="#customers" class="protected-link">Customers</a></li>
+                <li><a href="#movies" class="protected-link">Movies</a></li>
+                <li><a href="#employees" class="protected-link">Employees</a></li>
+                <li><a href="#rentals" id='rentalsLink' class="customer-only">Rentals</a></li>
+            </ul> -->
+            <span id="usernameDisplay" style="float: right; padding-right: 20px;"></span>
+            <button id="logoutButton" style="float: right; margin-right: 10px;">Logout</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Login Section -->
+        <section id="login" class="hidden">
+            <h2>Login</h2>
+            <form id="loginForm" onsubmit=submitLoginForm(event)>
+                <div>
+                    <label for="loginEmail">Email:</label>
+                    <input type="email" id="loginEmail" name="email" placeholder="Email" required>
+                </div>
+                <div>
+                    <label for="loginPassword">Password:</label>
+                    <input type="password" id="loginPassword" name="password" placeholder="Password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </section>
+
+        <!-- Register Section -->
+        <section id="register" class="hidden">
+            <h2>Register</h2>
+            <form id="registerForm" onsubmit=submitRegisterForm(event)>
+                <div>
+                    <label for="registerFirstName">First Name:</label>
+                    <input type="text" id="registerFirstName" name="firstName" placeholder="First Name" required>
+                </div>
+                <div>
+                    <label for="registerLastName">Last Name:</label>
+                    <input type="text" id="registerLastName" name="lastName" placeholder="Last Name" required>
+                </div>
+                <div>
+                    <label for="registerPhone">Phone Number:</label>
+                    <input type="tel" id="registerPhone" name="phone" placeholder="Phone" required>
+                </div>
+                <div>
+                    <label for="registerUsername">Username:</label>
+                    <input type="text" id="registerUsername" name="username" placeholder="Username" required>
+                </div>
+                <div>
+                    <label for="registerEmail">Email:</label>
+                    <input type="email" id="registerEmail" name="email" placeholder="Email" required>
+                </div>
+                <div>
+                    <label for="registerPassword">Password:</label>
+                    <input type="password" id="registerPassword" name="password" placeholder="Password" required>
+                </div>
+                <div>
+                    <label for="registerRole">Role:</label>
+                    <select id="registerRole" name="role" required>
+                        <option value="customer">Customer</option>
+                        <option value="employee">Employee</option>
+                    </select>
+                </div>
+                <button type="submit">Register</button>
+            </form>
+        </section>
+        <section id="customers" class="hidden">
+            <div id="customer-section">
+                <!-- <h2>Manage Customers</h2> -->
+                
+                <!-- Form for Adding/Updating Customers -->
+                <!-- <form id="customerForm" onsubmit=submitCustomerForm(event)>
+                    <input type="hidden" id="customerId" name="customerId">
+                    <div>
+                        <label for="customerName">Name:</label>
+                        <input type="text" id="customerName" name="name" placeholder="Customer Name" required>
+                    </div>
+                    <div>
+                        <label for="customerEmail">Email:</label>
+                        <input type="email" id="customerEmail" name="email" placeholder="Customer Email" required>
+                    </div>
+                    <div>
+                        <label for="customerPhone">Phone:</label>
+                        <input type="text" id="customerPhone" name="phone" placeholder="Customer Phone">
+                    </div>
+                    <div>
+                        <label for="customerAddress">Address:</label>
+                        <input type="text" id="customerAddress" name="address" placeholder="Customer Address">
+                    </div>
+                    <button type="submit">Save Customer</button>
+                    <button type="button" onclick="clearForm()">Clear</button>
+                </form> -->
+                
+                <!-- Customer List -->
+                <h3>Customer List</h3>
+                <ul id="customerList"></ul>
+            </div>
+        </section>
+        <section id="movies" class="hidden">
+            <div id="movie-section">
+                <h2>Manage Movies</h2>
+        
+                <!-- Form for Adding/Updating Movies -->
+                <form id="movieForm" onsubmit="submitMovieForm(event)">
+                    <input type="hidden" id="movieId" name="movieId">
+                    <div>
+                        <label for="movieTitle">Title:</label>
+                        <input type="text" id="movieTitle" name="title" placeholder="Movie Title" required>
+                    </div>
+                    <div>
+                        <label for="movieGenre">Genre:</label>
+                        <select id="movieGenre" name="genre" required>
+                            <option value="">Select a genre</option>
+                            <option value="Action">Action</option>
+                            <option value="Adventure">Adventure</option>
+                            <option value="Action">Action</option>
+                            <option value="Adventure">Adventure</option>
+                            <option value="Animation">Animation</option>
+                            <option value="Biography">Biography</option>
+                            <option value="Comedy">Comedy</option>
+                            <option value="Crime">Crime</option>
+                            <option value="Documentary">Documentary</option>
+                            <option value="Drama">Drama</option>
+                            <option value="Family">Family</option>
+                            <option value="Fantasy">Fantasy</option>
+                            <option value="Historical">Historical</option>
+                            <option value="Horror">Horror</option>
+                            <option value="Musical">Musical</option>
+                            <option value="Mystery">Mystery</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Science Fiction">Science Fiction</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Thriller">Thriller</option>
+                            <option value="War">War</option>
+                            <option value="Western">Western</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="movieYear">Release Year:</label>
+                        <input type="number" id="movieYear" name="year" placeholder="Release Year" required>
+                    </div>
+                    <div>
+                        <label for="movieQuantity">Quantity:</label>
+                        <input type="number" id="movieQuantity" name="quantity" placeholder="Quantity" required>
+                    </div>
+                    <button type="submit">Save Movie</button>
+                    <button type="button" onclick="clearMovieForm()">Clear</button>
+                </form>
+        
+                <!-- Movie List -->
+                <h3>Movie List</h3>
+                <ul id="movieList"></ul>
+
+                 <!-- Update Movie Form (initially hidden) -->
+                <section id="updateMovieSection" class="hidden">
+                    <h3>Update Movie</h3>
+                    <form id="updateMovieForm" onsubmit="submitUpdateMovieForm(event)">
+                        <input type="hidden" id="updateMovieId" name="movieId">
+                        <div>
+                            <label for="updateMovieTitle">Title:</label>
+                            <input type="text" id="updateMovieTitle" name="title" required>
+                        </div>
+                        <div>
+                            <label for="updateMovieGenre">Genre:</label>
+                            <select id="updateMovieGenre" name="genre" required>
+                                <option value="">Select a genre</option>
+                                <option value="Action">Action</option>
+                                <option value="Adventure">Adventure</option>
+                                <option value="Action">Action</option>
+                                <option value="Adventure">Adventure</option>
+                                <option value="Animation">Animation</option>
+                                <option value="Biography">Biography</option>
+                                <option value="Comedy">Comedy</option>
+                                <option value="Crime">Crime</option>
+                                <option value="Documentary">Documentary</option>
+                                <option value="Drama">Drama</option>
+                                <option value="Family">Family</option>
+                                <option value="Fantasy">Fantasy</option>
+                                <option value="Historical">Historical</option>
+                                <option value="Horror">Horror</option>
+                                <option value="Musical">Musical</option>
+                                <option value="Mystery">Mystery</option>
+                                <option value="Romance">Romance</option>
+                                <option value="Science Fiction">Science Fiction</option>
+                                <option value="Sports">Sports</option>
+                                <option value="Thriller">Thriller</option>
+                                <option value="War">War</option>
+                                <option value="Western">Western</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="updateMovieYear">Release Year:</label>
+                            <input type="number" id="updateMovieYear" name="year" required>
+                        </div>
+                        <div>
+                            <label for="updateMovieQuantity">Quantity:</label>
+                            <input type="number" id="updateMovieQuantity" name="quantity" required>
+                        </div>
+                        <button type="submit">Update Movie</button>
+                    </form>
+                </section>
+
+        
+                <!-- Return Movie Button (initially hidden) -->
+                <button id="returnMovieButton" class="hidden" onclick="returnMovie()">Return Movie</button>
+            </div>
+        </section>
+        <section id="employees" class="hidden">
+            <!-- Employee Management HTML here -->
+            <div id="employee-section">
+                <!-- <h2>Manage Employees</h2>
+                
+
+                <form id="employeeForm" onsubmit="submitEmployeeForm(event)">
+                    <input type="hidden" id="employeeId" name="employeeId">
+                    <div>
+                        <label for="employeeName">Name:</label>
+                        <input type="text" id="employeeName" name="name" placeholder="Employee Name" required>
+                    </div>
+                    <div>
+                        <label for="employeeRole">Role:</label>
+                        <input type="text" id="employeeRole" name="role" placeholder="Employee Role" required>
+                    </div>
+                    <div>
+                        <label for="employeeEmail">Email:</label>
+                        <input type="email" id="employeeEmail" name="email" placeholder="Employee Email" required>
+                    </div>
+                    <button type="submit">Save Employee</button>
+                    <button type="button" onclick="clearEmployeeForm()">Clear</button>
+                </form> -->
+                
+                <!-- Employee List -->
+                <h3>Employee List</h3>
+                <ul id="employeeList"></ul>
+            </div>
+            
+        </section>
+        <!-- Rentals Section -->
+        <section id="rentals">
+            <div id="rental-section">
+                <h2>Rent a Movie</h2>
+                
+                <!-- Form for Renting Movies -->
+                <form id="rentalForm" onsubmit="submitRentalForm(event)">
+                    <input type="hidden" id="rentalId" name="rentalId">
+                    <input type="hidden" id="rentalCustomerId" name="customerId"> <!-- Hidden for customers -->
+                    <div>
+                        <label for="rentalMovieId">Select Movie:</label>
+                        <select id="rentalMovieId" name="movieId" required>
+                            <option value="">Select a movie</option>
+                            <!-- Movie options will be populated here -->
+                        </select>
+                    </div>
+                    <div>
+                        <label for="returnDate">Return Date:</label>
+                        <input type="date" id="returnDate" name="returnDate" required>
+                    </div>
+                    <div>
+                        <label for="paymentMethod">Payment Method:</label>
+                        <select id="paymentMethod" name="paymentMethod" required>
+                            <option value="">Select Payment Method</option>
+                            <option value="cash">Cash</option>
+                            <option value="credit">Credit Card</option>
+                            <option value="debit">Debit Card</option>
+                        </select>
+                    </div>
+                    <button type="submit">Rent Movie</button>
+                </form>
+                <button id="downloadReportButton" onclick="downloadRentalsReport()">Download Rentals Report</button>
+                <!-- Rental List -->
+                <h3>Rental History</h3>
+                <ul id="rentalList"></ul>
+
+
+                <!-- Return Rental Button (initially hidden) -->
+                <button id="returnRentalButton" class="hidden" onclick="returnRental()">Return Rental</button>
+
+
+            </div>
+        </section>
+        <!-- Update Rental Section (initially hidden) -->
+        <section id="updateRentalSection" class="hidden">
+            <h3>Update Rental</h3>
+            <form id="updateRentalForm" onsubmit="submitUpdateRentalForm(event)">
+                <input type="hidden" id="updateRentalId" name="rentalId"> <!-- Hidden input to store the rental ID -->
+                
+                <div>
+                    <label for="updateReturnDate">Return Date:</label>
+                    <input type="date" id="updateReturnDate" name="returnDate" required>
+                </div>
+
+                <div>
+                    <label for="updatePaymentMethod">Payment Method:</label>
+                    <select id="updatePaymentMethod" name="paymentMethod" required>
+                        <option value="">Select Payment Method</option>
+                        <option value="cash">Cash</option>
+                        <option value="credit">Credit Card</option>
+                        <option value="debit">Debit Card</option>
+                    </select>
+                </div>
+
+                <button type="submit">Update Rental</button>
+            </form>
+        </section>
+        <!--Account Section-->
+            <section id="account" class="hidden">
+                <h2>Account Information</h2>
+            <div>
+                <label for="accountUsername">Username:</label>
+                <span id="accountUsername"></span>
+            </div>
+            <div>
+                <label for="accountEmail">Email:</label>
+                <span id="accountEmail"></span>
+            </div>
+        
+            <h2>Update Password</h2>
+            <form id="passwordForm" onsubmit="updatePassword(event)">
+                <div>
+                    <label for="currentPassword">Current Password:</label>
+                    <input type="password" id="currentPassword" name="currentPassword" required>
+                </div>
+                <div>
+                    <label for="newPassword">New Password:</label>
+                    <input type="password" id="newPassword" name="newPassword" required>
+                </div>
+                <div>
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="submit">Update Password</button>
+            </form>
+        
+            <h2>Delete Account</h2>
+            <button id="deleteAccountButton" onclick="deleteAccount()">Delete My Account</button>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2024 Brew City Rentals. All rights reserved.</p>
+    </footer>
+
+    <script>
+    // Check if the user is logged in and retrieve the user's details from localStorage
+    const loggedIn = localStorage.getItem('token') ? true : false;
+    const username = localStorage.getItem('username') || '';
+    const userRole = localStorage.getItem('role') || ''; // role should be 'customer' or 'employee'
+    const customerId = localStorage.getItem('customerId') || ''; // Store customer ID in localStorage for customers
+
+    const navLinks = document.getElementById('navLinks');
+    const usernameDisplay = document.getElementById('usernameDisplay'); // Element to display username
+    const logoutButton = document.getElementById('logoutButton'); // Logout button
+    const rentalMovieSelect = document.getElementById('rentalMovieId'); // Movie dropdown
+    const loginSection = document.getElementById('login'); // Login section
+    const registerSection = document.getElementById('register'); // Register section
+    const rentalSection = document.getElementById('rentals'); // Rentals section
+    const rentalForm = document.getElementById('rentalForm'); // Rentals section
+    const moviesSection = document.getElementById('movies'); // Movies section
+    const customersSection = document.getElementById('customers'); // Customers section
+    const employeesSection = document.getElementById('employees'); // Employees section
+    const accountSection = document.getElementById('account'); // account section
+
+    // Ensure the DOM is fully loaded before adding event listeners and making UI updates
+    document.addEventListener('DOMContentLoaded', () => {
+        // Dynamically update navigation based on whether the user is logged in
+        if (loggedIn) {
+            // Attach logout event listener
+            logoutButton.addEventListener('click', logout);
+
+            // Update navigation and visibility based on the user's role
+            updateNavigation();
+
+
+        // Handle visibility of Download Report button
+        const downloadReportButton = document.getElementById('downloadReportButton');
+        if (userRole === 'employee') {
+            downloadReportButton.classList.remove('hidden'); // Show the button for employees
+        } else {
+            downloadReportButton.classList.add('hidden'); // Hide the button for customers
+        }
+        } else {
+            // Show Login and Register links for logged-out users
+            showLoginAndRegisterLinks();
+
+            // Attach event listeners for showing Login and Register sections
+            document.querySelector('a[href="#login"]').addEventListener('click', showLoginSection);
+            document.querySelector('a[href="#register"]').addEventListener('click', showRegisterSection);
+        }
+        const rentalItems = document.querySelectorAll(".rental-item");
+
+
+    });
+
+    // Submit Register Form
+function submitRegisterForm(event) {
+        event.preventDefault();
+        const form = event.target;
+
+        const registerData = {
+            firstName: form.firstName.value,
+            lastName: form.lastName.value,
+            phone: form.phone.value,
+            username: form.username.value,
+            email: form.email.value,
+            password: form.password.value,
+            role: form.role.value // This should be either 'customer' or 'employee'
+        };
+
+        fetch('http://137.184.8.171:3000/api/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(registerData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.user) {
+                    alert('Registration successful');
+                    window.location.href = '#login'; // Redirect to login section
+                } else {
+                    alert('Registration failed: ' + data.message);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
+
+    // Dynamically update the navigation links based on user role
+    function updateNavigation() {
+        // Clear any existing links
+        navLinks.innerHTML = '';
+        if (userRole === 'customer') {
+            // Show rentals link only for customers
+            navLinks.innerHTML = `
+                <li><a href="#rentals" id="rentalsLink">Rentals</a></li>
+                <li><a href="#account" id="accountLink">Account</a></li>
+                `;
+            document.getElementById('rentals').classList.remove('hidden'); // Show rentals section
+            document.getElementById('accountLink').addEventListener('click', showAccountSection);
+            document.getElementById('rentalsLink').addEventListener('click', showRentalsSection);
+            populateRentalForm(); // Populate rental form for customers
+        } else if (userRole === 'employee') {
+            // Show all links for employees
+            navLinks.innerHTML = `
+                <li><a href="#movies" id="moviesLink">Movies</a></li>
+                <li><a href="#rentals" id="rentalsLink">Rental Report</a></li>
+                <li><a href="#customers" id="customersLink">Customers</a></li>
+                <li><a href="#employees" id="employeesLink">Employees</a></li>
+                <li><a href="#account" id="accountLink">Account</a></li>
+            `;
+            // Show relevant sections based on employee's access
+            document.getElementById('moviesLink').addEventListener('click', showMoviesSection);
+            document.getElementById('rentalsLink').addEventListener('click', showRentalsSection);
+            document.getElementById('customersLink').addEventListener('click', showCustomersSection);
+            document.getElementById('employeesLink').addEventListener('click', showEmployeesSection);
+            document.getElementById('accountLink').addEventListener('click', showAccountSection);
+            rentalForm.classList.add('hidden'); // Show the rental form for customers
+        }
+
+        // Display the username and show the logout button for both roles
+        usernameDisplay.textContent = `Logged in as: ${username} (${userRole})`;
+        logoutButton.style.display = 'inline'; // Ensure the Logout button is always visible
+    }
+
+    // Populate rental form (for both customers and employees)
+    function populateRentalForm() {
+        fetchMoviesForDropdown(); // Fetch movies for the dropdown in the rental form
+        if (userRole === 'customer') {
+            document.getElementById('rentalCustomerId').value = customerId; // Set hidden customer ID input for customers
+        }
+    }
+
+    function validateRentalForm() {
+        const rentalMovieId = document.getElementById('rentalMovieId').value;
+         // Get the current date (rental date) and return date from the form
+         const currentDate = new Date();
+        const returnDate = parseLocalDate(document.getElementById('returnDate').value);
+        const paymentMethod = document.getElementById('paymentMethod').value;
+        // Validate that a movie is selected
+        if (!rentalMovieId) {
+            alert('Please select a movie to rent.');
+            return false;
+        }
+
+        // Validate that the return date is set and is after the rental date
+        if (!returnDate) {
+            alert('Please select a return date.');
+            return false;
+        }
+
+
+        if (returnDate < currentDate) {
+            alert('Return date must be after the rental date.');
+            return false;
+        }
+
+        // Validate that a payment method is selected
+        if (!paymentMethod) {
+            alert('Please select a payment method.');
+            return false;
+        }
+
+        return true;
+    }
+
+// Function to submit the updated rental details
+function submitUpdateRentalForm(event) {
+    event.preventDefault();
+
+    const rentalId = document.getElementById('updateRentalId').value;
+    const returnDate = document.getElementById('updateReturnDate').value;
+    const paymentMethod = document.getElementById('updatePaymentMethod').value;
+
+    if (!rentalId || !returnDate || !paymentMethod) {
+        alert('Please complete all fields.');
+        return;
+    }
+
+    // Update the rental with the new return date and payment method
+    fetch(`http://137.184.8.171:3000/api/rentals/${rentalId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ returnDate, paymentMethod })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Rental updated successfully!');
+        fetchRentals(); // Refresh the rentals list
+        // Optionally hide the update section again
+        document.getElementById('updateRentalSection').classList.add('hidden');
+    })
+    .catch(error => {
+        console.error('Error updating rental:', error);
+    });
+}
+// Function to mark a movie as returned
+function returnMovie() {
+    const rentalId = document.getElementById('rentalId').value;
+
+    if (!rentalId) {
+        alert('Please select a rental to return.');
+        return;
+    }
+
+    fetch(`http://137.184.8.171:3000/api/rentals/${rentalId}/return`, { // Adjust API endpoint as needed
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ returned: true })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Movie returned successfully!');
+        fetchRentals(); // Refresh the rentals list
+    })
+    .catch(error => {
+        console.error('Error returning movie:', error);
+    });
+}
+
+
+function fetchMoviesForDropdown() {
+    const rentedMovieIds = localStorage.getItem('rentalMovieIds')
+
+    // Fetch all available movies
+    fetch('http://137.184.8.171:3000/api/movies')
+        .then(response => response.json())
+        .then(movies => {
+            // Filter out the movies that the user has already rented
+            console.log(rentedMovieIds)
+            const availableMovies = movies.filter(movie => !rentedMovieIds.includes(movie.id));
+            // Populate the movie dropdown with the available movies
+            const rentalMovieSelect = document.getElementById('rentalMovieId');
+            rentalMovieSelect.innerHTML = '<option value="">Select a movie</option>'; // Reset the dropdown
+            console.log(availableMovies)
+            availableMovies.forEach(movie => {
+                console.log(movie)
+                const option = document.createElement('option');
+                option.value = movie.id; // Movie ID
+                option.textContent = `${movie.title} (${movie.year})`; // Display movie title and year
+                rentalMovieSelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching movies:', error));
+}
+
+    // Logout functionality
+    function logout() {
+        // Clear all user-related data from localStorage
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        localStorage.removeItem('role');
+        localStorage.removeItem('customerId'); // Remove the customer ID if any
+
+
+         // Reload the page after logging out to reflect the logged-out state
+         window.location.reload(); // Reload to reset the UI after logout
+    }
+
+    function parseLocalDate(dateString) {
+        const [year, month, day] = dateString.split("-").map(Number);
+        return new Date(year, month - 1, day); // month is 0-indexed in JavaScript Date
+    }
+
+
+    // Submit Rental Form
+    function submitRentalForm(event) {
+        event.preventDefault();
+        let today = new Date();
+        const form = event.target;
+
+        // Validate form before submitting
+        if (!validateRentalForm()) {
+            return;
+        }
+
+        
+
+        const rentalData = {
+            customerId: localStorage.id, // Automatically use the logged-in customer's ID
+            movieId: form.movieId.value, // Use the selected movie ID from the dropdown
+            rentalDate: today,
+            returnDate: parseLocalDate(form.returnDate.value),
+            paymentMethod: form.paymentMethod.value
+        };
+
+        fetch('http://137.184.8.171:3000/api/rentals', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(rentalData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            fetchRentals(); // Refresh the list
+            form.reset();
+            alert('Movie rented successfully!');
+            location.reload();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
+    // Function to mark a movie as returned
+    function returnMovie() {
+        const rentalId = document.getElementById('rentalId').value;
+
+        if (!rentalId) {
+            alert('Please select a rental to return.');
+            return;
+        }
+
+        fetch(`http://137.184.8.171:3000/api/rentals/${rentalId}/return`, { // Adjust API endpoint as needed
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ returned: true })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Movie returned successfully!');
+            fetchRentals(); // Refresh the rentals list
+        })
+        .catch(error => {
+            console.error('Error returning movie:', error);
+        });
+    }
+
+
+    // Show the Rentals section when the Rentals link is clicked (for customers and employees)
+function showRentalsSection(event) {
+    event.preventDefault();
+    hideAllSections(); // Hide all other sections
+
+    rentalForm.classList.add('hidden'); // Hide the rental form for employees
+    rentalSection.classList.remove('hidden'); // Always show the rentals section
+    if (userRole === 'customer') {
+        rentalForm.classList.remove('hidden'); // Show the rental form for customers
+    }
+    
+    fetchRentals(); // Fetch and display the rental list for both customers and employees
+}
+
+    // Show Login and Register links for users who are not logged in
+    function showLoginAndRegisterLinks() {
+        navLinks.innerHTML = `
+            <li><a href="#login" id="loginLink">Login</a></li>
+            <li><a href="#register" id="registerLink">Register</a></li>
+        `;
+        logoutButton.style.display = 'none'; // Hide the Logout button when not logged in
+        loginSection.classList.add('hidden'); // Initially hide login form
+        registerSection.classList.add('hidden'); // Initially hide register form
+        rentalSection.classList.add('hidden'); // Hide rentals section for logged-out users
+    }
+
+    // Function to hide all sections initially
+    function hideAllSections() {
+        rentalSection.classList.add('hidden');
+        moviesSection.classList.add('hidden');
+        customersSection.classList.add('hidden');
+        employeesSection.classList.add('hidden');
+        accountSection.classList.add('hidden');
+    }
+
+    // Show the Movies section when the Movies link is clicked (for employees)
+    function showMoviesSection(event) {
+        event.preventDefault();
+        hideAllSections(); // Hide all sections first
+        moviesSection.classList.remove('hidden'); // Show the movies section
+    }
+
+    // Show the Customers section when the Customers link is clicked (for employees)
+    function showCustomersSection(event) {
+        hideAllSections(); // Hide all sections first
+        customersSection.classList.remove('hidden'); // Show the customers section
+        fetchCustomers()
+    }
+
+    // Show the Employees section when the Employees link is clicked (for employees)
+    function showEmployeesSection(event) {
+        event.preventDefault();
+        hideAllSections(); // Hide all sections first
+        employeesSection.classList.remove('hidden'); // Show the employees section
+    }
+
+    // Show the Login section when the Login link is clicked
+    function showLoginSection(event) {
+        event.preventDefault();
+        loginSection.classList.remove('hidden');
+        registerSection.classList.add('hidden'); // Hide register section when showing login
+    }
+
+    // Show the Register section when the Register link is clicked
+    function showRegisterSection(event) {
+        event.preventDefault();
+        registerSection.classList.remove('hidden');
+        loginSection.classList.add('hidden'); // Hide login section when showing register
+    }
+
+    function fetchAccountInfo() {
+    const userId = localStorage.getItem("id");
+    fetch(`http://137.184.8.171:3000/api/auth/${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            document.getElementById("accountUsername").textContent = data.username;
+            document.getElementById("accountEmail").textContent = data.email;
+        })
+        .catch(error => console.error("Error fetching account info:", error));
+}
+
+function fetchCustomers() {
+    fetch('http://137.184.8.171:3000/api/customers')
+        .then(response => response.json())
+        .then(data => {
+            const list = document.getElementById('customerList');
+            list.innerHTML = '';
+            data.forEach(customer => {
+                console.log(customer)
+                const item = document.createElement('li');
+                item.textContent = `${customer.firstName} ${customer.lastName} - ${customer.email} - Customer ID: ${customer.id}`;
+                item.onclick = function() {
+                    loadCustomer(customer);
+                };
+                list.appendChild(item);
+            });
+        })
+        .catch(error => console.error('Error fetching customers:', error));
+}
+
+function submitCustomerForm(event) {
+    event.preventDefault();
+    const form = event.target;
+    const url = 'http://137.184.8.171:3000/api/customers' + (form.customerId.value ? `/${form.customerId.value}` : '');
+    const method = form.customerId.value ? 'PUT' : 'POST';
+
+    const formData = {
+        name: form.name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        address: form.address.value
+    };
+
+    fetch(url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        fetchCustomers(); // Refresh the list
+        clearForm();
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
+function loadCustomer(customer) {
+    document.getElementById('customerId').value = customer.id;
+    document.getElementById('customerName').value = customer.name;
+    document.getElementById('customerEmail').value = customer.email;
+    document.getElementById('customerPhone').value = customer.phone;
+    document.getElementById('customerAddress').value = customer.address;
+}
+
+function clearForm() {
+    document.getElementById('customerForm').reset();
+    document.getElementById('customerId').value = '';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    fetchMovies();
+});
+
+function fetchMovies() {
+    fetch('http://137.184.8.171:3000/api/movies')
+        .then(response => response.json())
+        .then(data => {
+            const list = document.getElementById('movieList');
+            list.innerHTML = '';
+            data.forEach(movie => {
+                const item = document.createElement('li');
+                item.textContent = `${movie.title} - ${movie.genre} (${movie.release_year}) - Quantity: ${movie.quantity}`;
+                item.onclick = function() {
+                    loadMovie(movie);
+                };
+                list.appendChild(item);
+            });
+        })
+        .catch(error => console.error('Error fetching movies:', error));
+}
+
+function submitMovieForm(event) {
+    event.preventDefault();
+    const form = event.target;
+    const url = 'http://137.184.8.171:3000/api/movies';
+    const method = 'POST';
+
+    const formData = {
+        title: form.title.value,
+        genre: form.genre.value,
+        year: parseInt(form.year.value),
+        quantity: parseInt(form.quantity.value)
+    };
+
+     // Validate quantity
+     if (formData.quantity <= 0) {
+        alert("Quantity must be greater than 0.");
+        return;
+    }
+
+    fetch(url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        fetchMovies(); // Refresh the list
+        clearMovieForm();
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
+// Submit Update Movie Form
+function submitUpdateMovieForm(event) {
+    event.preventDefault();
+    const form = event.target;
+    const movieId = form.movieId.value;
+
+    const movieData = {
+        title: form.title.value,
+        genre: form.genre.value,
+        release_year: form.year.value,
+        quantity: parseInt(form.quantity.value)
+    };
+
+    if (movieData.release_year < 1900) {
+        alert(`Release year must be greater than 1900.`);
+        return false;
+    }
+
+    // Validate quantity
+    if (movieData.quantity <= 0) {
+        alert("Quantity must be greater than 0.");
+        return;
+    }
+
+    console.log(movieId)
+
+    fetch(`http://137.184.8.171:3000/api/movies/${movieId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(movieData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Movie updated successfully!');
+        fetchMovies(); // Refresh movie list
+        clearUpdateMovieForm(); // Clear update form after submission
+    })
+    .catch(error => console.error('Error updating movie:', error));
+}
+
+// Clear Update Movie Form
+function clearUpdateMovieForm() {
+    document.getElementById('updateMovieForm').reset();
+    document.getElementById('updateMovieSection').classList.add('hidden');
+    document.getElementById('returnMovieButton').classList.add('hidden');
+}
+
+
+function loadMovie(movie) {
+    document.getElementById('movieId').value = movie.id;
+    document.getElementById('updateMovieId').value = movie.id;
+    document.getElementById('updateMovieTitle').value = movie.title;
+    document.getElementById('updateMovieGenre').value = movie.genre;
+    document.getElementById('updateMovieYear').value = movie.release_year;
+    document.getElementById('updateMovieQuantity').value = movie.quantity;
+
+    // Show the Update Movie section and Return Movie button
+    document.getElementById('updateMovieSection').classList.remove('hidden');
+    document.getElementById('returnMovieButton').classList.remove('hidden');
+}
+
+function clearMovieForm() {
+    document.getElementById('movieForm').reset();
+    document.getElementById('movieId').value = '';
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    fetchRentals();
+});
+
+function downloadRentalsReport() {
+    fetch(`http://137.184.8.171:3000/api/rentals?userId=${localStorage.getItem('id')}`)
+        .then(response => response.json())
+        .then(data => {
+            if (!data || data.length === 0) {
+                alert("No rentals available to download.");
+                return;
+            }
+
+            // Convert rentals data to CSV format
+            const csvRows = [
+                ["Rental ID", "Movie Title", "Rental Date", "Return Date", "Payment Method", "Customer ID"]
+            ];
+
+            data.forEach(rental => {
+                console.log(rental)
+                csvRows.push([
+                    rental.id,
+                    rental.Movie.title,
+                    rental.rental_date,
+                    rental.return_date,
+                    rental.payment_method,
+                    rental.customer_id
+                ]);
+            });
+
+            const csvContent = csvRows.map(row => row.join(",")).join("\n");
+
+            // Create a Blob and a download link
+            const blob = new Blob([csvContent], { type: "text/csv" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "rentals_report.csv";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        })
+        .catch(error => {
+            console.error("Error fetching rentals report:", error);
+            alert("Failed to download rentals report.");
+        });
+}
+
+
+function fetchRentals() {
+    fetch(`http://137.184.8.171:3000/api/rentals?userId=${localStorage.getItem('id')}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            const list = document.getElementById('rentalList');
+            list.innerHTML = '';
+            let movieIds = []
+            if (data.message) {
+                const item = document.createElement('li');
+                item.textContent = `No current rentals`;
+            } else {
+                data.forEach(rental => {
+                    const item = document.createElement('li');
+                    item.classList.add("rental-item");
+                    item.addEventListener("click", function() {
+                    const rentalItems = document.querySelectorAll(".rental-item");
+                    rentalItems.forEach(i => i.classList.remove("bold"));
+                        // Add the 'bold' class to the clicked item
+                        item.classList.add("bold");
+                    });
+                    item.setAttribute("rentalId", rental.id);
+                    movieIds.push(rental.Movie.id)
+                    item.textContent = `Movie: ${rental.Movie.title}, Rental Date: ${rental.rental_date}, Return Date: ${rental.return_date}, Payment: ${rental.payment_method}, Customer ID: ${rental.customer_id} Rental Returned: ${rental.is_returned}`;
+                    item.onclick = function() {
+                        localStorage.removeItem('currentRentalId')
+                        localStorage.setItem('currentRentalId', rental.id);
+                        loadRental(rental);
+                    };
+                    list.appendChild(item);
+                });
+            }
+             // need to set movieIds based on ones that have never been rented or previously returned
+            localStorage.setItem('rentalMovieIds', movieIds)
+        })
+        .catch(error => {
+            console.error('Error fetching rentals:', error)
+        });
+}
+
+
+function loadRental(rental) {
+    // Show the update form section
+    const updateRentalSection = document.getElementById('updateRentalSection');
+    updateRentalSection.classList.remove('hidden'); // Make the update section visible
+
+    const returnRentalButton = document.getElementById('returnRentalButton');
+    returnRentalButton.classList.remove('hidden'); // Show the Return Rental button
+
+    // Populate the update form with the selected rental's data
+    document.getElementById('updateRentalId').value = rental.id; // Set the hidden rental ID
+    document.getElementById('updateReturnDate').value = rental.return_date ? rental.return_date.split('T')[0] : ''; // Set return date if exists
+    document.getElementById('updatePaymentMethod').value = rental.payment_method; // Set payment method
+
+    // Only show the Return button if the user is a customer
+    if (userRole === 'customer') {
+        returnRentalButton.classList.remove('hidden');
+    } else {
+        returnRentalButton.classList.add('hidden');
+    }
+}
+
+// Function to handle returning a rental
+function returnRental() {
+    const rentalId = document.getElementById('updateRentalId').value;
+    if (!rentalId) return alert('No rental selected');
+
+    fetch(`http://137.184.8.171:3000/api/rentals/${rentalId}/return`, { // Adjust endpoint as necessary
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ returned: true })
+    })
+    .then(response => response.json())
+    .then(data => {
+        fetchRentals(); // Refresh the rentals list
+        document.getElementById('returnRentalButton').classList.add('hidden'); // Hide button after return
+        alert('Rental returned successfully!');
+        location.reload();
+    })
+    .catch(error => console.error('Error returning rental:', error));
+}
+
+function clearRentalForm() {
+    document.getElementById('rentalForm').reset();
+    document.getElementById('rentalId').value = '';
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    fetchEmployees();
+});
+
+function fetchEmployees() {
+    fetch('http://137.184.8.171:3000/api/employees')
+        .then(response => response.json())
+        .then(data => {
+            const employees = data.filter(employee => employee.role === 'employee')
+            const list = document.getElementById('employeeList');
+            list.innerHTML = '';
+            employees.forEach(employee => {
+                const item = document.createElement('li');
+                item.textContent = `${employee.firstName} ${employee.lastName} - ${employee.role}`;
+                item.onclick = function() {
+                    loadEmployee(employee);
+                };
+                list.appendChild(item);
+            });
+        })
+        .catch(error => console.error('Error fetching employees:', error));
+}
+
+// Submit Login Form
+function submitLoginForm(event) {
+        event.preventDefault();
+        const form = event.target;
+
+        const loginData = {
+            email: form.email.value,
+            password: form.password.value
+        };
+
+        fetch('http://137.184.8.171:3000/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(loginData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.response.token) {
+                    // Save token, username, and role to localStorage
+                    localStorage.setItem('token', data.response.token);
+                    localStorage.setItem('username', data.response.user.username);
+                    localStorage.setItem('role', data.response.user.role); // Save role (customer/employee)
+                    localStorage.setItem('id', data.response.user.id); // Save role (customer/employee)
+                    alert('Login successful');
+                    window.location.reload(); // Reload to update UI
+
+                } else {
+                    alert('Login failed: ' + data.message);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
+function submitEmployeeForm(event) {
+    event.preventDefault();
+    const form = event.target;
+    const url = 'http://137.184.8.171:3000/api/employees' + (form.employeeId.value ? `/${form.employeeId.value}` : '');
+    const method = form.employeeId.value ? 'PUT' : 'POST';
+
+    const formData = {
+        name: form.name.value,
+        role: form.role.value,
+        email: form.email.value
+    };
+
+    fetch(url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        fetchEmployees(); // Refresh the list
+        clearEmployeeForm();
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+    
+}
+
+function loadEmployee(employee) {
+    document.getElementById('employeeId').value = employee.id;
+    document.getElementById('employeeName').value = employee.name;
+    document.getElementById('employeeRole').value = employee.role;
+    document.getElementById('employeeEmail').value = employee.email;
+}
+
+function clearEmployeeForm() {
+    document.getElementById('employeeForm').reset();
+    document.getElementById('employeeId').value = '';
+}
+
+    // Example for fetching protected resource (using token from login)
+    function fetchProtectedData() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                fetch('http://137.184.8.171:3000/api/protected-route', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Protected data:', data);
+                })
+                .catch(error => console.error('Error fetching protected data:', error));
+            } else {
+                alert('You need to log in first');
+            }
+        }
+
+    // Show the Account section when the Account link is clicked
+function showAccountSection(event) {
+    event.preventDefault();
+    hideAllSections(); // Hide other sections
+    document.getElementById('account').classList.remove('hidden'); // Show Account section
+    fetchAccountInfo(); // Fetch and display account info
+}
+
+
+// Update password
+function updatePassword(event) {
+    event.preventDefault();
+
+    const userId = localStorage.getItem("id");
+    const currentPassword = document.getElementById("currentPassword").value;
+    const newPassword = document.getElementById("newPassword").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (newPassword !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+    }
+
+    fetch(`http://137.184.8.171:3000/api/auth/${userId}/update-password`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ currentPassword, newPassword }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            alert("Password updated successfully.");
+            document.getElementById("passwordForm").reset();
+        })
+        .catch(error => console.error("Error updating password:", error));
+}
+
+// Delete account
+function deleteAccount() {
+    const userId = localStorage.getItem("id");
+    const confirmation = confirm("Are you sure you want to delete your account? This action is irreversible.");
+
+    if (!confirmation) return;
+
+    fetch(`http://137.184.8.171:3000/api/auth/${userId}`, {
+        method: "DELETE",
+    })
+        .then(response => response.json())
+        .then(data => {
+                alert("Account deleted successfully.");
+                localStorage.clear(); // Clear local storage
+                window.location.href = "/register"; // Redirect to registration
+        })
+        .catch(error => console.error("Error deleting account:", error));
+}
+    </script>
+</body>
+</html>
